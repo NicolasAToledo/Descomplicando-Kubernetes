@@ -1,0 +1,64 @@
+Dia 2 - descomplicando Kubernetes
+
+Comandos aprendidos em aula 
+
+Aula: Os sensacionais kubectl get pods e o kubectl decribe pods
+k get pods - pegar todos os pods namespace default
+
+k get pods -A - pega todos os pods de todos os namespace = kubectl get pods --all-namespaces
+
+k get pods -n kube-system - pegando pods de um namespace especifico
+
+kubectl describe pods giropops - descreve detalhes de um determinado pod
+
+kubectl get pods giropops -o yaml - descreve o pod, mas dessa vez com uma saida yaml
+ 
+kubectl get pods -o wide - mais detalhes sobre os pods como ip e node
+
+kubectl get pods -L run - filtrando o get por labels
+
+Aula: conhecendo o kubectl attach e o kubectl exec
+kubectl delete pods giropops - deleta um pod com base no nome
+
+kubectl run strigus --image nginx --port 80 - criando um pod
+
+k get pod strigus -o yaml
+kubectl run -it girus --image busybox - criando um pod de forma interativa
+
+kubectl run -it girus-2 --image alpine - criando um pod de forma interativa
+
+kubectl attach girus-2 -c girus-2 -i -t - voltar a ter acesso interativo(terminal)
+
+kubectl exec -ti strigus -- bash  | usar esse comando quando o pod estiver executando um serviço como o nginx
+ COMO PEGAR UM PROCESSO EM EXECUÇÃO MESMO O CONTAINER NÃO TENDO PS: 
+cd /proc/1
+cat 39/cmdline = bashroot@strigus:/proc#
+
+kubectl exec strigus -- cat /usr/share/nginx/html/index.html - executando um comando direto no pod
+
+kubectl delete pod girus-2 - deletando novamente
+
+AULA: Criando nosso primeiro pod multicontainer utilizando um manifesto
+
+ubectl run girus-1 --image alpine --dry-run=client
+kubectl run girus-1 --image alpine --dry-run=client -o yaml  | output em forma de yaml
+
+kubectl run girus-1 --image alpine --dry-run=client -o yaml > pod.yaml | Atribuindo a saida para um arquivo yaml/manifesto
+
+kubectl apply -f pod.yaml | Aplicar e subir o pod
+
+k delete -f pod.yaml | deletar o pod com base no yaml
+
+COmandos de logs: 
+kubectl logs girus
+kubectl logs girus -f
+kubectl logs girus -c apache
+k describe pods girus
+
+
+AULA: Limitando o consumo de recursos de CPU e memória
+k exec -ti giropops -- bash
+ps -ef
+free -m
+  
+
